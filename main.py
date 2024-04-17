@@ -1,20 +1,26 @@
 import sys
-from constantes import colores
-from constantes import posiciones
+
+import jugador
+from constantes import Colores
+from constantes import Posiciones
+from jugador import Jugador
 import pygame
 
 pygame.init()
 
 vetanaJuego = pygame.display.set_mode((600, 400))
-
+jugador1 = Jugador(20,100,20,140,5, (255, 0, 0))
+jugador2 = Jugador(20,100,560,140,5, (0, 0, 255))
 reloj = pygame.time.Clock()
 
 gameOver = False
 
 def PintarObjetos():
-    vetanaJuego.fill(colores.negro)
-    pygame.draw.rect(vetanaJuego, colores.verde, (posiciones.posEscenario,posiciones.midaEscenario))
+    vetanaJuego.fill(Colores.negro)
+    pygame.draw.rect(vetanaJuego, Colores.verde, (Posiciones.posEscenario,Posiciones.midaEscenario))
 
+    jugador1.pintar(vetanaJuego)
+    jugador2.pintar(vetanaJuego)
 
 def DetectarEventos():
     for event in pygame.event.get():
