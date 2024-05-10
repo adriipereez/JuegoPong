@@ -2,6 +2,8 @@ import random
 import sys
 import pygame
 
+#https://github.com/adriipereez/JuegoPong.git
+
 import constantes
 from constantes import Colores, Posiciones, PelotaConstantes
 from jugador import Jugador
