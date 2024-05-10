@@ -9,10 +9,11 @@ from pelota import Pelota
 
 pygame.init()
 
-ventanaJuego = pygame.display.set_mode((600, 400))
+ventanaJuego = pygame.display.set_mode((600, 450))
 jugador1 = Jugador(20, 100, 20, 140, 5, (255, 0, 0))
 jugador2 = Jugador(20, 100, 560, 140, 5, (0, 0, 255))
 pelota = Pelota(ventanaJuego, constantes.PelotaConstantes.VELOCIDAD_INICIAL, (255, 255, 255))
+fontText = pygame.font.SysFont("monospace", 25)
 
 reloj = pygame.time.Clock()
 
@@ -21,6 +22,14 @@ gameOver = False
 def PintarObjetos():
     ventanaJuego.fill(Colores.negro)
     pygame.draw.rect(ventanaJuego, Colores.verde, (Posiciones.posEscenario, Posiciones.midaEscenario))
+
+
+
+    # Mostrar els punts dels jugadors
+    text1 = fontText.render(f"Jugador 1: {jugador1.puntos}", True, Colores.blanco)
+    text2 = fontText.render(f"Jugador 2: {jugador2.puntos}", True, Colores.blanco)
+    ventanaJuego.blit(text1, (10, ventanaJuego.get_height() - 50))
+    ventanaJuego.blit(text2, (ventanaJuego.get_width() - text2.get_width() - 10, ventanaJuego.get_height() - 50))
 
     jugador1.pintar(ventanaJuego)
     jugador2.pintar(ventanaJuego)
@@ -33,41 +42,11 @@ def DetectarEventos():
     jugador1.moverJugador(pygame.K_w,pygame.K_s)
     jugador2.moverJugador(pygame.K_UP,pygame.K_DOWN)
 
-def moverPelota():
-    pelota.posicionX += pelota.velocidad * pelota.direccionX
-    pelota.posicionY += pelota.velocidad * pelota.direccionY
-
-    # Rebote en el escenario verde
-    if pelota.posicionY - pelota.medida[1] / 2 <= Posiciones.posEscenario[1] or pelota.posicionY + pelota.medida[
-        1] / 2 >= Posiciones.posEscenario[1] + Posiciones.midaEscenario[1]:
-        pelota.direccionY *= -1
-        pelota.velocidad += PelotaConstantes.INCREMENTO_VELOCIDAD
-
-    if pelota.posicionX - pelota.medida[0] / 2 <= Posiciones.posEscenario[0]:
-        pelota.posicionX = ventanaJuego.get_width() // 2
-        pelota.posicionY = ventanaJuego.get_height() // 2
-        pelota.velocidad = PelotaConstantes.VELOCIDAD_INICIAL
-        pelota.direccionX = random.choice([-1, 1])
-        pelota.direccionY = random.choice([-1, 1])
-
-    elif pelota.posicionX + pelota.medida[0] / 2 >= Posiciones.posEscenario[0] + Posiciones.midaEscenario[0]:
-        pelota.posicionX = ventanaJuego.get_width() // 2
-        pelota.posicionY = ventanaJuego.get_height() // 2
-        pelota.velocidad = PelotaConstantes.VELOCIDAD_INICIAL
-        pelota.direccionX = random.choice([-1, 1])
-        pelota.direccionY = random.choice([-1, 1])
-
-    elif (pelota.posicionX - pelota.medida[0] / 2 <= jugador1.posicionX + jugador1.medidaX and
-          jugador1.posicionY <= pelota.posicionY <= jugador1.posicionY + jugador1.medidaY) or \
-            (pelota.posicionX + pelota.medida[0] / 2 >= jugador2.posicionX and
-             jugador2.posicionY <= pelota.posicionY <= jugador2.posicionY + jugador2.medidaY):
-        pelota.direccionX *= -1
-        pelota.velocidad += PelotaConstantes.INCREMENTO_VELOCIDAD
 
 while not gameOver:
     PintarObjetos()
     DetectarEventos()
 
-    moverPelota()
+    pelota.moverPelota(ventanaJuego, jugador1, jugador2)
     reloj.tick(30)
     pygame.display.update()

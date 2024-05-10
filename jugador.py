@@ -5,6 +5,7 @@ from constantes import Posiciones
 
 
 class Jugador(Escenario):
+    puntos = 0;
     def __init__(self, medidaX, medidaY, posicionX, posicionY, velocidad, color):
         self.medidaX = medidaX
         self.medidaY = medidaY
@@ -19,5 +20,3 @@ class Jugador(Escenario):
         elif pygame.key.get_pressed()[teclaAbajo]:
             self.posicionY = min(Posiciones.posEscenario[1] + Posiciones.midaEscenario[1] - self.medidaY,
                                 self.posicionY + self.vel)
-
-
