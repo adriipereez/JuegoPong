@@ -1,8 +1,10 @@
 import random
 import pygame
 
-class Pelota:
-    medida = (15, 15)
+from Escenario import Escenario
+
+
+class Pelota(Escenario):
 
     def __init__(self, ventanajuego, velocidad, color):
         self.posicionX = ventanajuego.get_width() // 2
@@ -11,6 +13,3 @@ class Pelota:
         self.direccionX = random.choice([-1, 1])
         self.direccionY = random.choice([-1, 1])
         self.color = color
-
-    def pintar(self, ventanaJuego):
-        pygame.draw.circle(ventanaJuego, self.color, (self.posicionX, self.posicionY), self.medida[0] // 2)

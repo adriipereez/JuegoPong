@@ -24,20 +24,14 @@ def PintarObjetos():
 
     jugador1.pintar(ventanaJuego)
     jugador2.pintar(ventanaJuego)
-    pelota.pintar(ventanaJuego)
+    pelota.pintarPelota(ventanaJuego)
 
 def DetectarEventos():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-    moverJugador(jugador1, pygame.K_w, pygame.K_s)
-    moverJugador(jugador2, pygame.K_UP, pygame.K_DOWN)
-
-def moverJugador(jugador, teclaArriba, teclaAbajo):
-    if pygame.key.get_pressed()[teclaArriba]:
-        jugador.posicionY = max(Posiciones.posEscenario[1], jugador.posicionY - jugador.vel)
-    elif pygame.key.get_pressed()[teclaAbajo]:
-        jugador.posicionY = min(Posiciones.posEscenario[1] + Posiciones.midaEscenario[1] - jugador.medidaY, jugador.posicionY + jugador.vel)
+    jugador1.moverJugador(pygame.K_w,pygame.K_s)
+    jugador2.moverJugador(pygame.K_UP,pygame.K_DOWN)
 
 def moverPelota():
     pelota.posicionX += pelota.velocidad * pelota.direccionX

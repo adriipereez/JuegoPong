@@ -9,4 +9,3 @@ class Posiciones:
 class PelotaConstantes:
     VELOCIDAD_INICIAL = 5
     INCREMENTO_VELOCIDAD = 1.1
-
